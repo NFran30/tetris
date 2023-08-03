@@ -6,8 +6,8 @@ import wheelsunh.users.Frame;
  * Tetris.java:
  * Main class for tetris, the program starts from here
  *
- * @author Professor Rossi
- * @version 1.0 July 24, 2020
+ * @author Nick Frangedakis
+ * @version 1.0 Aug 2, 2020
  */
 public class Tetris
 {

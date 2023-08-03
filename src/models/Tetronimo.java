@@ -11,8 +11,8 @@ import java.util.Random;
  * Tetronimo.java:
  * An abstract class to model the base capaabilities of a tetronimo
  *
- * @author Professor Rossi
- * @version 1.0 July 24, 2020
+ * @author Nick Frangedakis
+ * @version 1.0 Aug 2, 2020
  *
  * @see java.awt.Color
  */

@@ -3,6 +3,7 @@ package controllers;
 import models.Square;
 import models.StraightLine;
 import models.Tetronimo;
+import models.L;
 import views.TetrisBoard;
 
 import java.util.Random;
@@ -13,8 +14,8 @@ import java.util.Random;
  * TetrisController.java:
  * Class to hold all the game logic for tetris
  *
- * @author Professor Rossi
- * @version 1.0 July 24, 2020
+ * @author Nick Frangedakis
+ * @version 1.0 Aug 2, 2020
  */
 public class TetrisController
 {
@@ -44,7 +45,7 @@ public class TetrisController
         Random random = new Random();
 
         //Randomly generates one of the 4 Tetrominos
-        switch (random.nextInt(2))
+        /*switch (random.nextInt(3))
         {
             case 0 :
                 tetronimo = new StraightLine();
@@ -52,9 +53,13 @@ public class TetrisController
             case 1 :
                 tetronimo = new Square();
                 break;
+            case 2 :
+                tetronimo = new L();
             default:
                 tetronimo = new StraightLine();         //TODO: Need to remove this and make an exception
-        }
+        }*/
+
+        tetronimo = new L();
 
         tetronimo.setLocation( 40 + (5 * Tetronimo.SIZE), 0 );
 

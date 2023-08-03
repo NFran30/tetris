@@ -6,8 +6,8 @@ import java.awt.Point;
  * StraightLine.java:
  * Creates a straight line tetronimo
  *
- * @author Professor Rossi
- * @version 1.0 July 24, 2020
+ * @author Nick Frangedakis
+ * @version 1.0 Aug 2, 2020
  *
  * @see java.awt.Point
  */

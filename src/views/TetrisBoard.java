@@ -14,8 +14,8 @@ import java.awt.event.KeyListener;
  * TetrisBoard.java:
  * Class to model the tetris board
  *
- * @author Professor Rossi
- * @version 1.0 July 24, 2020
+ * @author Nick Frangedakis
+ * @version 1.0 Aug 2, 2020
  *
  * @see java.awt.Color
  * @see java.awt.event.KeyListener
@@ -29,7 +29,7 @@ public class TetrisBoard implements KeyListener
     public static final int WIDTH = 10;
 
     /**
-     * Constant to represnet the height of the board
+     * Constant to represent the height of the board
      */
     public static final int HEIGHT = 24;
 
