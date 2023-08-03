@@ -19,9 +19,9 @@ public class StraightLine extends Tetronimo
     public StraightLine()
     {
         super.r1.setLocation( 0, 0 );
-        super.r2.setLocation( 0, Tetronimo.SIZE );
-        super.r3.setLocation( 0, Tetronimo.SIZE * 2 );
-        super.r4.setLocation( 0, Tetronimo.SIZE * 3 );
+        super.r2.setLocation( Tetronimo.SIZE,0  );
+        super.r3.setLocation( Tetronimo.SIZE * 2, 0 );
+        super.r4.setLocation( Tetronimo.SIZE * 3, 0 );
 
         super.add( r1 );
         super.add( r2 );
@@ -36,26 +36,13 @@ public class StraightLine extends Tetronimo
     public void rotate()
     {
         super.rotate();
-
         Point curLoc = super.getLocation();
-        super.setLocation( 0, 0 );
 
-        if( super.curRotation % 2 == 0 )
-        {
-            super.r1.setLocation( 0, 0 );
-            super.r2.setLocation( Tetronimo.SIZE, 0 );
-            super.r3.setLocation( Tetronimo.SIZE * 2, 0 );
-            super.r4.setLocation( Tetronimo.SIZE * 3, 0 );
-        }
-        else
-        {
-            super.r1.setLocation( 0, 0 );
-            super.r2.setLocation( 0, Tetronimo.SIZE );
-            super.r3.setLocation( 0, Tetronimo.SIZE * 2 );
-            super.r4.setLocation( 0, Tetronimo.SIZE * 3 );
-        }
+        //Sent rotational point for StraitLine object
+        super.setLocation( -(Tetronimo.SIZE * 2), 0 );
 
-        super.setLocation( curLoc );
+        //Get next rectangle location -90 degree
+        rotateTetronimo(curLoc);
     }
 
     /**

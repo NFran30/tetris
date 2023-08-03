@@ -4,7 +4,7 @@ import wheelsunh.users.Animator;
 import wheelsunh.users.Rectangle;
 import wheelsunh.users.ShapeGroup;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -90,5 +90,34 @@ public abstract class Tetronimo extends ShapeGroup
     public void shiftRight()
     {
         super.setLocation( super.getXLocation() + Tetronimo.SIZE, super.getYLocation() );
+    }
+
+    private int[] ccwTetronimo90(int x, int y)
+    {
+        //Matrix to rotate the rectangle object clockwise 90 degrees
+        int[][] rotateMatrix = new int[][] {{0, 1}, {-1, 0}};
+        int[] nextLocation = new int[2];
+
+        nextLocation[0] = (rotateMatrix[0][0] * x) + (rotateMatrix[0][1] * y);
+        nextLocation[1] = (rotateMatrix[1][0] * x) + (rotateMatrix[1][1] * y);
+
+        return nextLocation;
+    }
+
+    protected void rotateTetronimo(Point curLoc)
+    {
+        //Get next rectangle location -90 degree
+        int[] nextPointR1 = ccwTetronimo90(r1.getXLocation(), r1.getYLocation());
+        int[] nextPointR2 = ccwTetronimo90(r2.getXLocation(), r2.getYLocation());
+        int[] nextPointR3 = ccwTetronimo90(r3.getXLocation(), r3.getYLocation());
+        int[] nextPointR4 = ccwTetronimo90(r4.getXLocation(), r4.getYLocation());
+
+        //Set new Rectangle points for
+        r1.setLocation( nextPointR1[0], nextPointR1[1]);
+        r2.setLocation( nextPointR2[0], nextPointR2[1]);
+        r3.setLocation( nextPointR3[0], nextPointR3[1]);
+        r4.setLocation( nextPointR4[0], nextPointR4[1]);
+
+        super.setLocation( curLoc );
     }
 }

@@ -4,6 +4,7 @@ import models.Square;
 import models.StraightLine;
 import models.Tetronimo;
 import models.L;
+import models.T;
 import views.TetrisBoard;
 
 import java.util.Random;
@@ -45,7 +46,8 @@ public class TetrisController
         Random random = new Random();
 
         //Randomly generates one of the 4 Tetrominos
-        /*switch (random.nextInt(3))
+        /*
+        switch (random.nextInt(4))
         {
             case 0 :
                 tetronimo = new StraightLine();
@@ -55,11 +57,12 @@ public class TetrisController
                 break;
             case 2 :
                 tetronimo = new L();
+                break;
             default:
                 tetronimo = new StraightLine();         //TODO: Need to remove this and make an exception
         }*/
 
-        tetronimo = new L();
+        tetronimo = new T();
 
         tetronimo.setLocation( 40 + (5 * Tetronimo.SIZE), 0 );
 
