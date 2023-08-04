@@ -39,7 +39,7 @@ public class StraightLine extends Tetronimo
         Point curLoc = super.getLocation();
 
         //Sent rotational point for StraitLine object
-        super.setLocation( -(Tetronimo.SIZE * 2), 0 );
+        super.setLocation( -Tetronimo.SIZE, 0);
 
         //Get next rectangle location -90 degree
         rotateTetronimo(curLoc);

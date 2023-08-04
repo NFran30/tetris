@@ -120,4 +120,40 @@ public abstract class Tetronimo extends ShapeGroup
 
         super.setLocation( curLoc );
     }
+
+    public int getRectangleXLocation (int rectNumber)
+    {
+        //Allows get location of one of the 4 rectangles
+        switch (rectNumber)
+        {
+            case 1 :
+                return r1.getXLocation();
+            case 2:
+                return r2.getXLocation();
+            case 3:
+                return r3.getXLocation();
+            case 4:
+                return r4.getXLocation();
+            default:
+                return -1;      //TODO: This should be some form of error
+        }
+    }
+
+    public int getRectangleYLocation (int rectNumber)
+    {
+        //Allows get location of one of the 4 rectangles
+        switch (rectNumber)
+        {
+            case 1 :
+                return r1.getYLocation();
+            case 2:
+                return r2.getYLocation();
+            case 3:
+                return r3.getYLocation();
+            case 4:
+                return r4.getYLocation();
+            default:
+                return -1;      //TODO: This should be some form of error
+        }
+    }
 }

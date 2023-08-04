@@ -144,7 +144,7 @@ public class TetrisBoard implements KeyListener
                         ((TetrisBoard.WIDTH * Tetronimo.SIZE) + 40))
                 {
                     this.tetronimo.shiftRight();
-                }
+                }           //TODO: Need Case for down arrow, accelerate the fall
                 break;
         }
 

@@ -25,7 +25,7 @@ public class L extends Tetronimo
         Point curLoc = super.getLocation();
 
         //Sent rotational point for L object
-        super.setLocation( -(Tetronimo.SIZE * 2), -Tetronimo.SIZE );
+        super.setLocation( -Tetronimo.SIZE, -Tetronimo.SIZE );
 
         //Get next rectangle location -90 degree
         rotateTetronimo(curLoc);
