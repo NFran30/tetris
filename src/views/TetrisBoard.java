@@ -79,10 +79,18 @@ public class TetrisBoard implements KeyListener
     {
         this.tetronimo = this.CONTROLLER.getNextTetromino();
 
-        while( this.CONTROLLER.tetronimoLanded( this.tetronimo ) )
+        //TODO: Fix the hard coded scenario, only allowing 6 Tetronimos
+        int count = 0;
+        while(count < 6)
         {
-            this.tetronimo.setLocation( this.tetronimo.getXLocation(), this.tetronimo.getYLocation() + Tetronimo.SIZE );
-            Utilities.sleep( 500 );
+            while( this.CONTROLLER.tetronimoLanded( this.tetronimo ) )
+            {
+                this.tetronimo.setLocation( this.tetronimo.getXLocation(), this.tetronimo.getYLocation() + Tetronimo.SIZE );
+                Utilities.sleep( 500 );
+
+            }
+            this.tetronimo = this.CONTROLLER.getNextTetromino();
+            count++;
         }
 
         /*
