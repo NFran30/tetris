@@ -6,6 +6,7 @@ import models.Tetronimo;
 import models.L;
 import views.TetrisBoard;
 
+import java.awt.*;
 import java.util.Random;
 
 //TODO: all of the necessary logic for the game, scoring, how many points to assign to player, gameover, alike
@@ -92,21 +93,16 @@ public class TetrisController
      */
     public boolean tetronimoLanded(Tetronimo tetronimo)
     {
-        //TODO: Need to check for contact
-        //Function to check lowest point, compare to block on board
-        int collisionPoint = checkLocationPostMove(tetronimo);
-        int nextY = tetronimo.getYLocation() + tetronimo.getHeight() + Tetronimo.SIZE;
-
-        //TODO: Call method to check the score
-        return nextY <= collisionPoint;
+        return checkLocationPostMove(tetronimo);
     }
 
-    private int checkLocationPostMove(Tetronimo tetronimo)
+    private boolean checkLocationPostMove(Tetronimo tetronimo)
     {
+        boolean returnStatus = true;
         int collisionPoint = 480;
         int col, row;
-
-        int closestCollision = 0;
+        int closestCollision;
+        Point[] currPoints = new Point[4];
 
         //Check Tetrominio orientation
         for (int i = 1; i < 5; i++)
@@ -114,22 +110,36 @@ public class TetrisController
             col = (tetronimo.getRectangleXLocation(i) / Tetronimo.SIZE - 1);
             row = (tetronimo.getRectangleYLocation(i) / Tetronimo.SIZE);
 
+            //Placeholder for coordinates of each
+            currPoints[i-1] = new Point();
+            currPoints[i-1].setLocation(row, col);
+
             //Set Tetronimo's current position
             tetronimoPositionBoard[row][col] = 1;
 
-            for (int y = col; y < TetrisBoard.HEIGHT; y++)
+            //Set comparable value column closest to collision
+            closestCollision = Integer.MAX_VALUE;
+            for (int x = row; x < TetrisBoard.HEIGHT; x++)
             {
-                if (tetronimoPositionBoard[row][y] == 1)
-                    if (closestCollision > y - col)
-                        closestCollision = y - col;
+                if (tetronimoPositionBoard[x][col + (i - 1)] == 1)
+                    if (closestCollision > Math.abs(x - row))
+                    {
+                        closestCollision = Math.abs(x - row);
+
+                        //Check to see if Tetronimo's next move would be collision
+                        if (closestCollision == 1)
+                            returnStatus = false;
+                    }
             }
         }
 
-        //Traverse a check from collision
-
+        //When Tetronimo hasn't landed erase previous position on Position Board
+        if (returnStatus)
+            for (int i = 0; i < currPoints.length; i++)
+                tetronimoPositionBoard[currPoints[i].x][currPoints[i].y] = 0;
 
         //Return the distance to the closest collision
-        return collisionPoint;
+        return returnStatus;
     }
 
     public int checkAwardedPoints(int linesCleared)
