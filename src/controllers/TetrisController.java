@@ -45,10 +45,10 @@ public class TetrisController
     private void initializePositionKeeper()
     {
         //Initialize the array that track the location of the landed tetronimos
-        tetronimoPositionBoard = new int[TETRIS_BOARD.WIDTH][TETRIS_BOARD.HEIGHT];
+        tetronimoPositionBoard = new int[TETRIS_BOARD.HEIGHT][TETRIS_BOARD.WIDTH];
 
-        for(int x = 0; x < TETRIS_BOARD.WIDTH; x++)
-            for(int y = 0; y < TETRIS_BOARD.HEIGHT; y++)
+        for(int x = 0; x < TETRIS_BOARD.HEIGHT; x++)
+            for(int y = 0; y < TETRIS_BOARD.WIDTH; y++)
                 tetronimoPositionBoard[x][y] = 0;
     }
 
@@ -121,7 +121,7 @@ public class TetrisController
             closestCollision = Integer.MAX_VALUE;
             for (int x = row; x < TetrisBoard.HEIGHT; x++)
             {
-                if (tetronimoPositionBoard[x][col + (i - 1)] == 1)
+                if (tetronimoPositionBoard[x][col] == 1)
                     if (closestCollision > Math.abs(x - row))
                     {
                         closestCollision = Math.abs(x - row);
