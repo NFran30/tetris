@@ -37,6 +37,8 @@ public class TetrisBoard implements KeyListener
     private Tetronimo tetronimo;
     private Rectangle[][] playingField;
 
+    private int freeFall = 500;
+
     /**
      * Constructor to initialize the board
      *
@@ -86,7 +88,7 @@ public class TetrisBoard implements KeyListener
             while( this.CONTROLLER.tetronimoLanded( this.tetronimo ) )
             {
                 this.tetronimo.setLocation( this.tetronimo.getXLocation(), this.tetronimo.getYLocation() + Tetronimo.SIZE );
-                Utilities.sleep( 500 );
+                Utilities.sleep( freeFall );
 
             }
             this.tetronimo = this.CONTROLLER.getNextTetromino();
@@ -142,20 +144,29 @@ public class TetrisBoard implements KeyListener
                 this.tetronimo.rotate();
                 break;
             case 37:
-                if( this.tetronimo.getXLocation() - Tetronimo.SIZE >= 40 )
+                if(this.CONTROLLER.okSlideLeft)
                 {
                     this.tetronimo.shiftLeft();
                 }
+
+                /*if( this.tetronimo.getXLocation() - Tetronimo.SIZE >= 40 )
+                {
+                    this.tetronimo.shiftLeft();
+                }*/
                 break;
             case 39:
-                if( (this.tetronimo.getXLocation() + this.tetronimo.getWidth()) <
+                if( (this.CONTROLLER.okSlideRight))
+                {
+                    this.tetronimo.shiftRight();
+                }
+
+                /*if( (this.tetronimo.getXLocation() + this.tetronimo.getWidth()) <
                         ((TetrisBoard.WIDTH * Tetronimo.SIZE) + 40))
                 {
                     this.tetronimo.shiftRight();
-                }           //TODO: Need Case for down arrow, accelerate the fall
+                }*/           //TODO: Need Case for down arrow, accelerate the fall
                 break;
         }
-
     }
 
     /**

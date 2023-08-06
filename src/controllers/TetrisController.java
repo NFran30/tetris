@@ -36,6 +36,9 @@ public class TetrisController
     private int highestPoint;
     private int leftestPoint;
 
+    public boolean okSlideLeft = true;
+    public boolean okSlideRight = true;
+
     /**
      * Constructor to take in a tetris board so the controller and the board can communicate
      *
@@ -63,7 +66,6 @@ public class TetrisController
         for(int x = 0; x < POSITION_BOARD_HEIGHT; x++)
             for(int y = 0; y < POSITION_BOARD_WIDTH; y++)
                 tetronimoPositionBoard[x][y] = 0;
-
     }
 
     /**
@@ -91,8 +93,6 @@ public class TetrisController
             default:
                 tetronimo = new StraightLine();         //TODO: Need to remove this and make an exception
         }
-
-        //tetronimo = new StraightLine();
 
         tetronimo.setLocation( 40 + (5 * Tetronimo.SIZE), 0 );
 
@@ -134,11 +134,17 @@ public class TetrisController
             row = (tetronimo.getRectangleYLocation(i) / Tetronimo.SIZE);
 
             //Check the bounds of the Tetronimo
-            if (col > rightestPoint)
+            if (col >= rightestPoint)
+            {
+                System.out.println("Leftest Pos: " + rightestPoint);
                 rightestPoint = col;
+            }
 
-            if (col < leftestPoint)
+            if (col <= leftestPoint)
+            {
+                System.out.println("Leftest Pos: " + rightestPoint);
                 leftestPoint = col;
+            }
 
             if (row < highestPoint)
                 highestPoint = row;
@@ -146,19 +152,18 @@ public class TetrisController
             if (row > lowestPoint)
                 lowestPoint = row;
 
-            if (lowestPoint == TetrisBoard.HEIGHT - 1) {
-                //returnStatus = false;
-                System.out.println("At lowest point ");
-                returnStatus = false;
-
+            if (lowestPoint == TetrisBoard.HEIGHT - 1)
+            {
+                //Resent bounds for next tetronimo
                 initializeTetronimoBounds();
+                returnStatus = false;
             }
 
             //Placeholder for coordinates of each
             currPoints[i-1] = new Point();
             currPoints[i-1].setLocation(row, col);
 
-            //Set Tetronimo's current position
+            //Set a moving Tetronimo's temp position to -1
             tetronimoPositionBoard[row][col] = -1;
 
             for (int x = row + 1; x < TetrisBoard.HEIGHT; x++)
@@ -171,17 +176,40 @@ public class TetrisController
                         //Check to see if Tetronimo's next move would be collision
                         if (closestCollision == 1)
                         {
+                            //Resent bounds for next tetronimo
                             initializeTetronimoBounds();
                             returnStatus = false;
                         }
                     }
-
             }
+
+            //Keep Tetronimo in bounds
+            if(leftestPoint == 0)
+            {
+                okSlideLeft = false;
+                //System.out.println("Leftest Pos: " + rightestPoint);
+            }
+            else
+            {
+                okSlideLeft = true;
+            }
+
+            if(rightestPoint == TetrisBoard.WIDTH - 1)
+            {
+                okSlideRight = false;
+                System.out.println("Rightest Pos: " + rightestPoint);
+            }
+            else
+                okSlideRight = true;
+
         }
 
         //Prepare board for next Tetronimo, landed or still moving
         for (int i = 0; i < currPoints.length; i++)
             tetronimoPositionBoard[currPoints[i].x][currPoints[i].y] = returnStatus ? 0 : 1;
+
+
+        initializeTetronimoBounds();
 
         //Return the distance to the closest collision
         return returnStatus;
