@@ -53,14 +53,20 @@ public class StraightLine extends Tetronimo
     @Override
     public int getHeight()
     {
-        if( this.curRotation % 2 == 0 )
+        if( this.curRotation % 4 == 0 )
+        {
+            return Tetronimo.SIZE * 2;
+        }
+        else if (this.curRotation % 4 == 1 || this.curRotation % 4 == 3)
         {
             return Tetronimo.SIZE;
         }
-        else
+        else if (this.curRotation % 4 == 2)
         {
-            return Tetronimo.SIZE * 4;
+            return Tetronimo.SIZE * 3;
         }
+        else
+            return -1;  //TODO: NEED A WAY TO HANDLE THIS, THREW A NEGATIVE NUMBER BUT SHOULD NEVER HAPPEN
     }
 
     /**
@@ -71,13 +77,30 @@ public class StraightLine extends Tetronimo
     @Override
     public int getWidth()
     {
-        if( this.curRotation % 2 == 0 )
+        if( this.curRotation % 4 == 1 )
+        {
+            return Tetronimo.SIZE * 3;
+        }
+        else if (this.curRotation % 4 == 2)
+        {
+            return Tetronimo.SIZE;
+        }
+        else if (this.curRotation % 4 == 3)
+        {
+            return Tetronimo.SIZE * 2;
+        }
+        else
+        {
+            return Tetronimo.SIZE;
+        }
+
+       /* if( this.curRotation % 2 == 0 )
         {
             return Tetronimo.SIZE * 4;
         }
         else
         {
             return Tetronimo.SIZE;
-        }
+        }*/
     }
 }

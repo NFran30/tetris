@@ -74,6 +74,9 @@ public abstract class Tetronimo extends ShapeGroup
     public void rotate()
     {
         this.curRotation++;
+
+        //Point point = super.getLocation();
+        //System.out.println("x: " + point.x + ", y: " + point.y);
     }
 
     /**
@@ -81,6 +84,9 @@ public abstract class Tetronimo extends ShapeGroup
      */
     public void shiftLeft()
     {
+        Point point = super.getLocation();
+        System.out.println("x: " + point.x + ", y: " + point.y);
+
         super.setLocation( super.getXLocation() - Tetronimo.SIZE, super.getYLocation() );
     }
 
@@ -89,6 +95,9 @@ public abstract class Tetronimo extends ShapeGroup
      */
     public void shiftRight()
     {
+        Point point = super.getLocation();
+        System.out.println("x: " + point.x + ", y: " + point.y);
+
         super.setLocation( super.getXLocation() + Tetronimo.SIZE, super.getYLocation() );
     }
 
@@ -98,6 +107,7 @@ public abstract class Tetronimo extends ShapeGroup
         int[][] rotateMatrix = new int[][] {{0, 1}, {-1, 0}};
         int[] nextLocation = new int[2];
 
+        //Matrix multiplication
         nextLocation[0] = (rotateMatrix[0][0] * x) + (rotateMatrix[0][1] * y);
         nextLocation[1] = (rotateMatrix[1][0] * x) + (rotateMatrix[1][1] * y);
 
@@ -117,6 +127,8 @@ public abstract class Tetronimo extends ShapeGroup
         r2.setLocation( nextPointR2[0], nextPointR2[1]);
         r3.setLocation( nextPointR3[0], nextPointR3[1]);
         r4.setLocation( nextPointR4[0], nextPointR4[1]);
+
+
 
         super.setLocation( curLoc );
     }

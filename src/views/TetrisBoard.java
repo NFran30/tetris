@@ -37,7 +37,7 @@ public class TetrisBoard implements KeyListener
     private Tetronimo tetronimo;
     private Rectangle[][] playingField;
 
-    private int freeFall = 500;
+    private int fallVelocity = 500;
 
     /**
      * Constructor to initialize the board
@@ -80,6 +80,7 @@ public class TetrisBoard implements KeyListener
     public void run()
     {
         this.tetronimo = this.CONTROLLER.getNextTetromino();
+        this.CONTROLLER.SetTetronimo(this.tetronimo);
 
         //TODO: Fix the hard coded scenario, only allowing 6 Tetronimos
         int count = 0;
@@ -88,10 +89,10 @@ public class TetrisBoard implements KeyListener
             while( this.CONTROLLER.tetronimoLanded( this.tetronimo ) )
             {
                 this.tetronimo.setLocation( this.tetronimo.getXLocation(), this.tetronimo.getYLocation() + Tetronimo.SIZE );
-                Utilities.sleep( freeFall );
-
+                Utilities.sleep(fallVelocity);
             }
             this.tetronimo = this.CONTROLLER.getNextTetromino();
+            this.CONTROLLER.SetTetronimo(this.tetronimo);
             count++;
         }
 
@@ -132,6 +133,10 @@ public class TetrisBoard implements KeyListener
     public void keyPressed( KeyEvent e )
     {
         int key = e.getKeyCode();
+        int leftBound;
+        int rightBound;
+        //TODO: Need way of checking previous blocks left and right
+
 
         if( this.tetronimo == null )
         {
@@ -141,31 +146,62 @@ public class TetrisBoard implements KeyListener
         switch( key )
         {
             case 38:
-                this.tetronimo.rotate();
-                break;
+
+                if(CONTROLLER.currentShape.ordinal() == 3)
+                {
+                    if (this.tetronimo.getXLocation() == 40 && this.tetronimo.getWidth() == 20)
+                        break;
+                    else if(this.tetronimo.getXLocation() == 20 && this.tetronimo.getHeight() > 20)
+                        break;
+                    else if((this.tetronimo.getXLocation() + this.tetronimo.getWidth()) ==
+                            ((TetrisBoard.WIDTH * Tetronimo.SIZE) + 40))
+                        break;
+                    else if (this.tetronimo.getXLocation() + 20 == (TetrisBoard.WIDTH * Tetronimo.SIZE) &&
+                            this.tetronimo.getHeight() == Tetronimo.SIZE * 2)
+                        break;
+                    else if(this.tetronimo.getXLocation() ==
+                            (TetrisBoard.WIDTH * Tetronimo.SIZE))
+                        break;
+                    else if(this.tetronimo.getYLocation() == 20)
+                        break;
+                    else if(this.tetronimo.getYLocation() == (TetrisBoard.HEIGHT * Tetronimo.SIZE) &&
+                            (this.tetronimo.getWidth() == Tetronimo.SIZE * 2 ))
+                        break;
+                    else
+                        this.tetronimo.rotate();
+
+                    break;
+                }
             case 37:
-                if(this.CONTROLLER.okSlideLeft)
+                //TODO: Need a month to check orientation and check bounds
+                if(CONTROLLER.currentShape.ordinal() == 3)
                 {
-                    this.tetronimo.shiftLeft();
-                }
+                    if (this.tetronimo.getXLocation() == 20 && this.tetronimo.getHeight() > 20)
+                        break;
+                    else if (this.tetronimo.getXLocation() == 40 && this.tetronimo.getWidth() == Tetronimo.SIZE * 3)
+                        break;
+                    else if (this.tetronimo.getXLocation() == 60 && this.tetronimo.getWidth() == 40)
+                        break;
+                    else
+                        this.tetronimo.shiftLeft();
 
-                /*if( this.tetronimo.getXLocation() - Tetronimo.SIZE >= 40 )
-                {
-                    this.tetronimo.shiftLeft();
-                }*/
-                break;
+                    break;
+                }
             case 39:
-                if( (this.CONTROLLER.okSlideRight))
+                if(CONTROLLER.currentShape.ordinal() == 3)
                 {
-                    this.tetronimo.shiftRight();
+                    if( (this.tetronimo.getXLocation() + this.tetronimo.getWidth()) <
+                            ((TetrisBoard.WIDTH * Tetronimo.SIZE) + 20))
+                    {
+                        this.tetronimo.shiftRight();
+                    }
                 }
-
-                /*if( (this.tetronimo.getXLocation() + this.tetronimo.getWidth()) <
-                        ((TetrisBoard.WIDTH * Tetronimo.SIZE) + 40))
-                {
-                    this.tetronimo.shiftRight();
-                }*/           //TODO: Need Case for down arrow, accelerate the fall
                 break;
+            case 40:
+                fallVelocity = 50;
+                break;
+
+            //TODO: Need Case for down arrow, accelerate the fall
         }
     }
 
@@ -177,6 +213,7 @@ public class TetrisBoard implements KeyListener
     @Override
     public void keyReleased( KeyEvent e )
     {
-        //not in use
+        if (e.getKeyCode() == 40)
+            fallVelocity = 500;
     }
 }
